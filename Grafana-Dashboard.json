@@ -1,0 +1,75 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "panels": [
+    {
+      "type": "graph",
+      "title": "CPU Usage",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "100 - (avg by(instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ],
+      "id": 1,
+      "gridPos": {"x":0,"y":0,"w":12,"h":8}
+    },
+    {
+      "type": "graph",
+      "title": "Memory Usage",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100",
+          "legendFormat": "{{instance}}",
+          "refId": "B"
+        }
+      ],
+      "id": 2,
+      "gridPos": {"x":12,"y":0,"w":12,"h":8}
+    },
+    {
+      "type": "graph",
+      "title": "Disk Usage",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "node_filesystem_size_bytes{fstype!=\"tmpfs\",fstype!=\"devtmpfs\"} - node_filesystem_free_bytes{fstype!=\"tmpfs\",fstype!=\"devtmpfs\"}",
+          "legendFormat": "{{mountpoint}}",
+          "refId": "C"
+        }
+      ],
+      "id": 3,
+      "gridPos": {"x":0,"y":8,"w":12,"h":8}
+    },
+    {
+      "type": "graph",
+      "title": "Network Traffic",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total[5m])",
+          "legendFormat": "RX {{instance}}",
+          "refId": "D"
+        },
+        {
+          "expr": "rate(node_network_transmit_bytes_total[5m])",
+          "legendFormat": "TX {{instance}}",
+          "refId": "E"
+        }
+      ],
+      "id": 4,
+      "gridPos": {"x":12,"y":8,"w":12,"h":8}
+    }
+  ],
+  "title": "Server Monitoring Dashboard",
+  "schemaVersion": 37,
+  "version": 1,
+  "refresh": "15s"
+}
+
+
+
